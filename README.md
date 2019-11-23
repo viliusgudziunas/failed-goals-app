@@ -12,15 +12,10 @@ source ~/.bashrc
 ### Tests
 
 ```
-./node_modules/.bin/cypress run
 dc exec client npm test -- --verbose
-dc exec client react-scripts test --coverage --watchAll=false
-```
-
-To run all tests:
-
-```
-sh test.sh
+sh test.sh client
+sh test.sh e2e
+sh test.sh local
 ```
 
 ### Logs

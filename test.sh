@@ -1,5 +1,6 @@
 #!/bin/bash
 
+type=$1
 fails=""
 
 inspect() {
@@ -8,15 +9,42 @@ inspect() {
   fi
 }
 
-# run unit and integration tests
-docker-compose up -d --build
-docker-compose exec client react-scripts test --coverage --watchAll=false
-inspect $? client
+# run client-side tests
+client() {
+  docker-compose up -d --build
+  docker-compose exec client react-scripts test --coverage --watchAll=false
+  inspect $? client
+  docker-compose down
+}
 
 # run e2e tests
-./node_modules/.bin/cypress run
-inspect $? e2e
-docker-compose down
+e2e() {
+  docker-compose up -d --build
+  e2e_type=$1
+  if [[ ("${e2e_type}" == "local") || ("${e2e_type}" == "") ]]; then
+    ./node_modules/.bin/cypress run
+  elif [[ "${e2e_type}" == "ci" ]]; then
+    ./node_modules/.bin/cypress run --config baseUrl=http://localhost
+  fi
+  inspect $? e2e
+  docker-compose down
+}
+
+# run appropriate tests
+if [[ "${type}" == "client" ]]; then
+  echo "\n"
+  echo "Running client-side tests!\n"
+  client
+elif [[ "${type}" == "e2e" ]]; then
+  echo "\n"
+  echo "Running e2e tests!\n"
+  e2e "local"
+elif [[ ("${type}" == "local") || ("${type}" == "ci") ]]; then
+  echo "\n"
+  echo "Running all tests with ${type} settings!"
+  client
+  e2e ${type}
+fi
 
 # return proper code
 if [ -n "${fails}" ]; then
