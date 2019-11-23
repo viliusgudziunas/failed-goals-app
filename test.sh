@@ -24,7 +24,7 @@ e2e() {
   if [[ ("${e2e_type}" == "local") || ("${e2e_type}" == "") ]]; then
     ./node_modules/.bin/cypress run
   elif [[ "${e2e_type}" == "ci" ]]; then
-    ./node_modules/.bin/cypress run --config baseUrl=http://localhost
+    ./node_modules/.bin/cypress run --config baseUrl=http://localhost:3007
   fi
   inspect $? e2e
   docker-compose down
