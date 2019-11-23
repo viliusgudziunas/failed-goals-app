@@ -13,6 +13,8 @@ source ~/.bashrc
 
 ```
 ./node_modules/.bin/cypress run
+dc exec client npm test -- --verbose
+dc exec client react-scripts test --coverage --watchAll=false
 ```
 
 To run all tests:
