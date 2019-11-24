@@ -18,7 +18,8 @@
       "globals": {
         "describe": "writable",
         "it": "writable",
-        "cy": "writable"
+        "cy": "writable",
+        "beforeEach": "writable"
       }
     }
   ]
