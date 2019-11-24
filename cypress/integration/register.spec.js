@@ -1,7 +1,8 @@
-describe('Register page', () => {
-  it('should be displayed correctly', () => {
+describe('Register form', () => {
+  it('should be displayed', () => {
     cy.visit('/register')
       .get('h1')
-      .contains('Register');
+      .contains('Register')
+      .get('form');
   });
 });

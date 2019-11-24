@@ -44,6 +44,10 @@ elif [[ ("${type}" == "local") || ("${type}" == "ci") ]]; then
   echo "Running all tests with ${type} settings!"
   client
   e2e ${type}
+else
+  echo "\n"
+  echo "This type is not supported - ${type}"
+  exit 1
 fi
 
 # return proper code

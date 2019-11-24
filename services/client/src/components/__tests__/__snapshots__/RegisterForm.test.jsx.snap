@@ -1,9 +1,67 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Register Form component should match the snapshot 1`] = `
-<div>
+<div
+  className="container"
+>
   <h1>
     Register
   </h1>
+  <form>
+    <div
+      className="form-group"
+    >
+      <label
+        className="row"
+        htmlFor="email"
+      >
+        <div
+          className="form-label col-form-label col-sm-2"
+        >
+          Email
+        </div>
+        <div
+          className="col"
+        >
+          <input
+            className="form-control"
+            id="email"
+            sm="10"
+            type="email"
+          />
+        </div>
+      </label>
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        className="row"
+        htmlFor="password"
+      >
+        <div
+          className="form-label col-form-label col-sm-2"
+        >
+          Password
+        </div>
+        <div
+          className="col"
+        >
+          <input
+            className="form-control"
+            id="password"
+            sm="10"
+            type="password"
+          />
+        </div>
+      </label>
+    </div>
+    <button
+      className="btn btn-primary"
+      type="submit"
+    >
+      Submit
+    </button>
+  </form>
 </div>
 `;

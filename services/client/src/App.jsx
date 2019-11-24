@@ -1,12 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 import Index from './components/Index';
 import RegisterForm from './components/RegisterForm';
 
 const App = () => {
   return (
     <Router>
-      <div>
+      <Container>
         <nav>
           <ul>
             <li>
@@ -26,7 +27,7 @@ const App = () => {
             <RegisterForm />
           </Route>
         </Switch>
-      </div>
+      </Container>
     </Router>
   );
 };
