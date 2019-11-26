@@ -1,6 +1,32 @@
 version: '3.7'
 
 services:
+  users:
+    build:
+      context: ./services/users
+      dockerfile: Dockerfile
+    entrypoint: ['/usr/src/app/entrypoint.sh']
+    volumes:
+      - './services/users:/usr/src/app'
+    ports:
+      - 5001:5000
+    environment:
+      - FLASK_APP=project/__init__.py
+      - FLASK_ENV=development
+      - APP_SETTINGS=project.config.DevelopmentConfig
+      - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
+      - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
+
+  user-db:
+    build:
+      context: ./services/users/project/db
+      dockerfile: Dockerfile
+    ports:
+      - 5435:5432
+    environment:
+      - POSTGRES_USERS=postgres
+      - POSTGRES_PASSWORD=postgres
+
   client:
     build:
       context: ./services/client
@@ -13,6 +39,8 @@ services:
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - users
 
   nginx:
     build:
@@ -22,4 +50,5 @@ services:
     ports:
       - 80:80
     depends_on:
+      - users
       - client

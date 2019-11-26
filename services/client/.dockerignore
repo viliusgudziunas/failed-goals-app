@@ -1,8 +1,10 @@
 node_modules
 coverage
 build
-env
 htmlcov
 .dockerignore
 Dockerfile
 Dockerfile-prod
+eslintrc-json
+.gitignore
+README.md
