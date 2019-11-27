@@ -2,9 +2,11 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_bcrypt import Bcrypt
 
 db = SQLAlchemy()
 migrate = Migrate()
+bcrypt = Bcrypt()
 
 
 def create_app(script_info=None):
@@ -15,6 +17,7 @@ def create_app(script_info=None):
 
     db.init_app(app)
     migrate.init_app(app, db)
+    bcrypt.init_app(app)
 
     from project.api.users_ping import users_ping_bp as bp
     app.register_blueprint(bp)

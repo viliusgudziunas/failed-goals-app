@@ -23,6 +23,7 @@ eval $(dm env goals-app-dev)
 
 ```
 dc exec users python manage.py recreate_db
+dc exec users python manage.py seed_db
 ```
 
 ## Migrations
