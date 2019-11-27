@@ -12,8 +12,10 @@ inspect() {
 # run server-side tests
 server() {
   docker-compose up -d --build
-  docker-compose exec users pytest "project/tests"
-  inspect $? server
+  docker-compose exec users pytest "project/tests" -p no:warnings --cov="project"
+  inspect $? users
+  docker-compose exec users flake8 . --exclude migrations
+  inspect $? users-lint
   docker-compose down
 }
 
