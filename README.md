@@ -1,10 +1,14 @@
 # Goals App
 
+## Usefull Commands
+
 ### Bash Aliases
 
 ```
 source ~/.bashrc
 ```
+
+Sets:
 
 - dc='docker-compose'
 - dm='docker-machine'
@@ -19,6 +23,23 @@ eval $(dm env goals-app-dev)
 
 ```
 dc exec users python manage.py recreate_db
+```
+
+## Migrations
+
+```
+dc exec users python manage.py db init
+dc exec users python manage.py db migrate
+dc exec users python manage.py db upgrade
+```
+
+If migration fails:
+
+```
+dc exec users python manage.py db stamp heads
+dc exec users python manage.py db current
+dc exec users python manage.py db migrate
+dc exec users python manage.py db upgrade
 ```
 
 ### Tests
