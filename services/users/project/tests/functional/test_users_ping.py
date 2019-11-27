@@ -1,7 +1,4 @@
-import json
-
-
-def test_ping(test_app):
+def test_users_ping(test_app):
     client = test_app.test_client()
     response = client.get("/users/ping")
     data = response.json
