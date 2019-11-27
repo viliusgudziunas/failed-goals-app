@@ -7,7 +7,9 @@ exports[`Register Form component should match the snapshot 1`] = `
   <h1>
     Register
   </h1>
-  <form>
+  <form
+    onSubmit={[Function]}
+  >
     <div
       className="form-group"
     >
@@ -26,8 +28,11 @@ exports[`Register Form component should match the snapshot 1`] = `
           <input
             className="form-control"
             id="email"
+            onChange={[Function]}
+            required={true}
             sm="10"
             type="email"
+            value=""
           />
         </div>
       </label>
@@ -50,14 +55,18 @@ exports[`Register Form component should match the snapshot 1`] = `
           <input
             className="form-control"
             id="password"
+            onChange={[Function]}
+            required={true}
             sm="10"
             type="password"
+            value=""
           />
         </div>
       </label>
     </div>
     <button
       className="btn btn-primary"
+      disabled={false}
       type="submit"
     >
       Submit

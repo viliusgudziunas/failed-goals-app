@@ -9,6 +9,14 @@ inspect() {
   fi
 }
 
+# run server-side tests
+server() {
+  docker-compose up -d --build
+  docker-compose exec users pytest "project/tests"
+  inspect $? server
+  docker-compose down
+}
+
 # run client-side tests
 client() {
   docker-compose up -d --build
@@ -31,7 +39,11 @@ e2e() {
 }
 
 # run appropriate tests
-if [[ "${type}" == "client" ]]; then
+if [[ "${type}" == "server" ]]; then
+  echo "\n"
+  echo "Running server-side tests!\n"
+  server
+elif [[ "${type}" == "client" ]]; then
   echo "\n"
   echo "Running client-side tests!\n"
   client
@@ -42,6 +54,7 @@ elif [[ "${type}" == "e2e" ]]; then
 elif [[ ("${type}" == "local") || ("${type}" == "ci") ]]; then
   echo "\n"
   echo "Running all tests with ${type} settings!"
+  server
   client
   e2e ${type}
 else
