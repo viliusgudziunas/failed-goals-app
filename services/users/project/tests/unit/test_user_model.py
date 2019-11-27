@@ -48,3 +48,44 @@ def test_passwords_are_random(test_app, test_db):
     user_one = add_user()
     user_two = add_user("test2@test.com")
     assert user_one.password != user_two.password
+
+
+def test_encode_auth_token(test_app, test_db):
+    """encode_auth_token method returns a token in bytes"""
+    user = add_user()
+    auth_token = user.encode_auth_token()
+    assert isinstance(auth_token, bytes)
+
+
+def test_two_auth_tokens_for_one_user_match(test_app, test_db):
+    """encode_auth_token method returns the same token for the same id"""
+    user = add_user()
+    first_auth_token = user.encode_auth_token()
+    second_auth_token = user.encode_auth_token()
+    assert first_auth_token == second_auth_token
+
+
+def test_decode_auth_token(test_app, test_db):
+    """decode_auth_token method returns a user id"""
+    user = add_user()
+    auth_token = user.encode_auth_token()
+    assert User.decode_auth_token(auth_token) == user.id
+
+
+def test_decode_auth_token_incorrect_auth_token(test_app, test_db):
+    """
+    decode_auth_token method does not decode if an incorrect user id is provided
+    """
+    add_user()
+    auth_token = b"testIncorrectAuthToken"
+    assert User.decode_auth_token(auth_token) ==\
+        "Invalid token. Please log in again"
+
+
+def test_decode_auth_token_expired_auth_token(test_app, test_db):
+    """decode_auth_token method does not decode if auth_token is expired"""
+    user = add_user()
+    test_app.config["TOKEN_EXPIRATION_SECONDS"] = -1
+    auth_token = user.encode_auth_token()
+    assert User.decode_auth_token(auth_token) ==\
+        "Signature expired. Please log in again"
