@@ -74,7 +74,8 @@ def test_decode_auth_token(test_app, test_db):
 
 def test_decode_auth_token_incorrect_auth_token(test_app, test_db):
     """
-    decode_auth_token method does not decode if an incorrect user id is provided
+    decode_auth_token method does not decode
+    if an incorrect user id is provided
     """
     add_user()
     auth_token = b"testIncorrectAuthToken"

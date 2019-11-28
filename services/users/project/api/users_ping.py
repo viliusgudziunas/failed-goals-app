@@ -10,7 +10,7 @@ class UsersPing(Resource):
         return {
             "status": "success",
             "message": "pong!"
-        }
+        }, 200
 
 
 api.add_resource(UsersPing, "/users/ping")

@@ -21,6 +21,8 @@ def create_app(script_info=None):
 
     from project.api.users_ping import users_ping_bp as bp
     app.register_blueprint(bp)
+    from project.api.auth import auth_bp as bp
+    app.register_blueprint(bp, url_prefix="/auth")
 
     @app.shell_context_processor
     def ctx():
