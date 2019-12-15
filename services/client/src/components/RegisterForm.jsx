@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  registerRequest,
+  registerSuccess,
+  registerFailure
+} from '../redux/user/userActions';
 
 const RegisterForm = () => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitDisabled, setSubmitDisabled] = useState(false);
@@ -8,9 +16,20 @@ const RegisterForm = () => {
   const handleFormSubmit = e => {
     e.preventDefault();
     setSubmitDisabled(true);
-    // API call
-
-    console.log(email, password);
+    const data = { email, password };
+    dispatch(registerRequest());
+    axios
+      .post(`${process.env.REACT_APP_USERS_SERVICE_URL}/auth/register`, data)
+      .then(res => {
+        dispatch(registerSuccess(res.data.auth_token));
+      })
+      .catch(err => {
+        if (err.response) {
+          dispatch(registerFailure(err.response));
+        } else {
+          dispatch(registerFailure(err));
+        }
+      });
     setSubmitDisabled(false);
   };
 

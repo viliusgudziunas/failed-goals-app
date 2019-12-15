@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 import Index from './components/Index';
 import RegisterForm from './components/RegisterForm';
 
@@ -18,14 +20,16 @@ const App = () => {
           </ul>
         </nav>
 
-        <Switch>
-          <Route exact path='/'>
-            <Index />
-          </Route>
-          <Route exact path='/register'>
-            <RegisterForm />
-          </Route>
-        </Switch>
+        <Provider store={store}>
+          <Switch>
+            <Route exact path='/'>
+              <Index />
+            </Route>
+            <Route exact path='/register'>
+              <RegisterForm />
+            </Route>
+          </Switch>
+        </Provider>
       </div>
     </Router>
   );

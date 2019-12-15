@@ -4,12 +4,14 @@ import renderer from 'react-test-renderer';
 import Index from '../Index';
 
 describe('Index component', () => {
+  // Snapshot
   it('should match the snapshot', () => {
     const tree = renderer.create(<Index />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   const component = shallow(<Index />);
+  // Display
   it('should have a header', () => {
     const header = component.find('h1');
     expect(header.length).toBe(1);

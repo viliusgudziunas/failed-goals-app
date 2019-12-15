@@ -15,19 +15,16 @@ def register():
     }
     data = request.get_json()
     if not data:
-        print(1)
         return jsonify(response_object), 400
 
     email = data.get("email")
     password = data.get("password")
     if not email or not password:
-        print(2)
         return jsonify(response_object), 400
 
     try:
         user = User.query.filter_by(email=email).first()
         if user:
-            print(3)
             response_object["message"] = "Sorry. That user already exists"
             return response_object, 400
 
@@ -46,6 +43,5 @@ def register():
         return jsonify(response_object), 201
 
     except (exc.IntegrityError, ValueError):
-        print(4)
         db.session.rollback()
         return jsonify(response_object), 400
